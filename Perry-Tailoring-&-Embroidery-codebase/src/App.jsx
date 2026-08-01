@@ -223,7 +223,7 @@ function Hero() {
         {/* Trust badges */}
         <div className="hero-animate-delay-4 flex flex-wrap justify-center gap-8">
           {[
-            { num: '4.6★', label: 'Google Rating' },
+            { num: '5.0★', label: 'Google Rating' },
             { num: '1–2', label: 'Day Turnaround' },
             { num: 'Same', label: 'Day Available' },
             { num: 'Free', label: 'Quote' },
