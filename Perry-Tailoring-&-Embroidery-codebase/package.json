@@ -1,0 +1,27 @@
+{
+  "name": "perry-tailoring",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://t:eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJvcmNoaWRzIiwic3ViIjoiQHBpZXJyZS9zdG9yYWdlIiwicmVwbyI6ImIxNzYxMWFhLTljNDYtNGRhYS05MmQxLTA3MDBhOWQyMTNjMyIsInNjb3BlcyI6WyJnaXQ6cmVhZCIsImdpdDp3cml0ZSJdLCJpYXQiOjE3NzcxNjA0NDcsImV4cCI6MTgwODI2NDQ0N30.-w8p31N5boIorvSGKzSPQRFGHjgxVDfy6JPko8KzqUPYXP-P3vnkjTLsIUF6IRKmpBWWnrXgZJnQRi1hauhu7g@orchids.code.storage/b17611aa-9c46-4daa-92d1-0700a9d213c3.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tailwindcss/vite": "^4.2.4",
+    "@vitejs/plugin-react": "^6.0.1",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "tailwindcss": "^4.2.4",
+    "vite": "^8.0.10"
+  }
+}
