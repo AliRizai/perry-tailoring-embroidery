@@ -668,7 +668,7 @@ function About() {
    ═══════════════════════════════════════════ */
 function Contact() {
   const hours = [
-    { day: 'Monday – Friday', time: '9:00 am – 6:00 pm', open: true },
+    { day: 'Monday – Friday', time: '9:00 am – 5:00 pm', open: true },
     { day: 'Saturday', time: '9:00 am – 5:00 pm', open: true },
     { day: 'Sunday', time: 'Closed', open: false },
   ]
