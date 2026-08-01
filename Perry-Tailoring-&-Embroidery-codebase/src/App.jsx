@@ -195,7 +195,7 @@ function Hero() {
         </p>
 
         <p className="hero-animate-delay-2 text-sm tracking-widest mb-10" style={{ color: 'rgba(201,168,76,0.9)' }}>
-          Same-day service available · 4.6★ on Google
+          Same-day service available · 5.0★ on Google
         </p>
 
         {/* CTAs */}
@@ -417,12 +417,12 @@ function Testimonials() {
           <div className="flex items-center justify-center gap-3 mt-4">
             <div className="flex gap-0.5">
               {[1,2,3,4,5].map(i => (
-                <svg key={i} width="18" height="18" viewBox="0 0 24 24" fill={i <= 4 ? 'var(--gold)' : 'var(--gold-dim)'} stroke="none">
+                <svg key={i} width="18" height="18" viewBox="0 0 24 24" fill={i <= 5 ? 'var(--gold)' : 'var(--gold-dim)'} stroke="none">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
               ))}
             </div>
-            <span className="font-serif text-xl text-gold">4.6</span>
+            <span className="font-serif text-xl text-gold">5.0</span>
             <span className="text-muted text-sm">on Google Reviews</span>
           </div>
         </div>
