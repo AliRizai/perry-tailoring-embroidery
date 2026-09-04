@@ -74,6 +74,7 @@ function Nav({ theme, onToggle }) {
 
   const links = [
     { label: 'Services', href: '#services' },
+    { label: 'Embroidery', href: '#embroidery' },
     { label: 'Gallery', href: '#gallery' },
     { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },
@@ -91,11 +92,12 @@ function Nav({ theme, onToggle }) {
       <div className="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
         {/* Logo */}
         <a href="#hero" className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full flex items-center justify-center" style={{ border: '1px solid var(--gold)' }}>
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="1.5">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-            </svg>
-          </div>
+          <img
+            src="/images/perry-logo.png"
+            alt="Perry Tailoring & Embroidery logo"
+            className="w-10 h-10 rounded-full object-cover"
+            style={{ border: '1px solid var(--gold)' }}
+          />
           <div>
             <div className="font-serif text-lg leading-none text-gold">Perry</div>
             <div className="uppercase tracking-widest text-muted" style={{ fontSize: '9px' }}>Tailoring & Embroidery</div>
@@ -277,6 +279,8 @@ const services = [
     title: 'Embroidery',
     desc: 'Custom embroidery for clothing, uniforms, accessories and business orders. High quality, quick turnaround.',
     detail: 'Custom designs · Name & logo embroidery · Uniforms & workwear',
+    href: '#embroidery',
+    linkLabel: 'See custom embroidery →',
     icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3"><circle cx="12" cy="12" r="2"/><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>,
   },
   {
@@ -307,6 +311,11 @@ function Services() {
               <p className="text-secondary text-sm leading-relaxed mb-4">{s.desc}</p>
               <div style={{ height: '1px', background: 'var(--border)', marginBottom: '10px' }}/>
               <p className="text-muted text-xs leading-relaxed">{s.detail}</p>
+              {s.href && (
+                <a href={s.href} className="inline-block mt-3 text-xs tracking-wide text-gold">
+                  {s.linkLabel}
+                </a>
+              )}
             </div>
           ))}
         </div>
@@ -318,6 +327,205 @@ function Services() {
           </p>
         </div>
       </div>
+    </section>
+  )
+}
+
+/* ═══════════════════════════════════════════
+   LIGHTBOX
+   ═══════════════════════════════════════════ */
+function Lightbox({ item, onClose, onPrev, onNext }) {
+  useEffect(() => {
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = prev }
+  }, [])
+  return (
+    <div className="lightbox-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-label={item.caption}>
+      <div className="relative max-w-4xl w-full mx-4" onClick={e => e.stopPropagation()}>
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute -top-10 right-0 text-sm flex items-center gap-2 transition-colors"
+          style={{ color: 'rgba(250,248,244,0.6)' }}
+          onMouseEnter={e => { e.currentTarget.style.color = '#FAF8F4' }}
+          onMouseLeave={e => { e.currentTarget.style.color = 'rgba(250,248,244,0.6)' }}
+        >
+          Close <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        {onPrev && (
+          <button type="button" className="lightbox-nav prev" onClick={onPrev} aria-label="Previous image">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+        )}
+        {onNext && (
+          <button type="button" className="lightbox-nav next" onClick={onNext} aria-label="Next image">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        )}
+        <img
+          src={item.src}
+          alt={item.alt || item.caption}
+          className="w-full rounded-sm"
+          style={{ maxHeight: '82vh', objectFit: 'contain' }}
+        />
+        <p className="text-center text-sm mt-3" style={{ color: 'rgba(250,248,244,0.5)' }}>{item.caption}</p>
+      </div>
+    </div>
+  )
+}
+
+/* ═══════════════════════════════════════════
+   CUSTOM EMBROIDERY
+   ═══════════════════════════════════════════ */
+const embroideryHighlights = [
+  {
+    title: 'Custom logo embroidery',
+    desc: 'Company logos stitched onto uniforms, polos, jackets and workwear with a clean, durable finish.',
+  },
+  {
+    title: 'Name embroidery',
+    desc: 'Personalised names and lettering on caps, clothing, kidswear and gifts — from a single item to a full set.',
+  },
+  {
+    title: 'Uniform & workwear',
+    desc: 'Staff uniforms and branded workwear produced in-house, including matching bulk orders for teams and businesses.',
+  },
+  {
+    title: 'Caps, T-shirts, towels & more',
+    desc: 'Embroidery on caps, T-shirts, hoodies, towels, badges and other garments — not just clothing alterations.',
+  },
+  {
+    title: 'Business & bulk orders',
+    desc: 'Clubs, events and companies welcome. We handle volume orders with consistent stitching across every piece.',
+  },
+]
+
+const embroideryPhotos = [
+  {
+    src: '/images/embroidery-ruby-cap.jpg',
+    caption: 'Custom name embroidery on caps',
+    alt: 'Black and pink baseball cap with Ruby embroidered in pink script and a diamond motif',
+  },
+  {
+    src: '/images/embroidery-dog.jpg',
+    caption: 'Detailed custom pet portrait embroidery',
+    alt: 'German Shepherd portrait being embroidered on fabric by a professional embroidery machine',
+  },
+  {
+    src: '/images/apex-towels.jpg',
+    caption: 'Bulk towel and logo embroidery',
+    alt: 'Bulk order of grey textured towels embroidered with the APEX Captain\'s Day 2026 logo',
+  },
+  {
+    src: '/images/uniform-embroidery.jpg',
+    caption: 'Uniform and workwear orders',
+    alt: 'Matching yellow and brown custom uniforms hanging on racks in the tailoring workshop',
+  },
+]
+
+function Embroidery() {
+  const [lightbox, setLightbox] = useState(null)
+
+  useEffect(() => {
+    if (lightbox == null) return undefined
+    const fn = e => {
+      if (e.key === 'Escape') setLightbox(null)
+      if (e.key === 'ArrowRight') setLightbox(i => (i + 1) % embroideryPhotos.length)
+      if (e.key === 'ArrowLeft') setLightbox(i => (i - 1 + embroideryPhotos.length) % embroideryPhotos.length)
+    }
+    window.addEventListener('keydown', fn)
+    return () => window.removeEventListener('keydown', fn)
+  }, [lightbox])
+
+  const active = lightbox != null ? embroideryPhotos[lightbox] : null
+
+  return (
+    <section id="embroidery" className="py-24 md:py-32 bg-surface">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 md:gap-16 items-center mb-14">
+          <div className="reveal">
+            <SectionLabel text="In-House Stitching" center={false} />
+            <h2 className="font-serif text-4xl md:text-5xl font-light mb-5 leading-tight text-primary">
+              Custom <span className="text-gold">Embroidery</span>
+            </h2>
+            <p className="text-secondary leading-relaxed mb-5">
+              Alongside expert tailoring, Perry produces professional custom embroidery here in Northfleet, Gravesend. Logos, names and detailed designs are stitched in-house on industrial machines — so quality and turnaround stay under one roof.
+            </p>
+            <p className="text-secondary leading-relaxed mb-8">
+              Bring artwork, a garment, or an idea. We embroider clothing, uniforms, caps, towels and gifts for individuals, clubs and businesses, including bulk orders.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a href="tel:07869026632" className="btn-gold px-6 py-3 rounded-sm text-sm tracking-widest uppercase gap-2">
+                <PhoneIcon /> Get a Quote
+              </a>
+              <a href="#gallery" className="btn-outline-gold px-6 py-3 rounded-sm text-sm tracking-widest uppercase">
+                View Gallery
+              </a>
+            </div>
+          </div>
+
+          <div className="reveal">
+            <div className="rounded-sm overflow-hidden" style={{ border: '1px solid var(--border)' }}>
+              <img
+                src="/images/embroidery-machine.jpg"
+                alt="Professional Rainbow Emb embroidery machine and wall of coloured thread in the Perry workshop"
+                className="w-full object-cover"
+                style={{ aspectRatio: '3/4', objectPosition: 'center' }}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <p className="text-xs text-center mt-3 text-gold tracking-wide">
+              Professional embroidery, stitched in-house
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+          {embroideryHighlights.map((item, i) => (
+            <div
+              key={item.title}
+              className="card-subtle reveal rounded-sm p-6"
+              style={{ transitionDelay: `${i * 50}ms` }}
+            >
+              <div style={{ width: '28px', height: '1px', background: 'var(--gold)', marginBottom: '14px' }} />
+              <h3 className="font-serif text-lg font-light mb-2 text-primary">{item.title}</h3>
+              <p className="text-secondary text-sm leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          {embroideryPhotos.map((img, i) => (
+            <button
+              type="button"
+              key={img.src}
+              className="gallery-item reveal rounded-sm relative p-0 text-left"
+              style={{ aspectRatio: '3/4', transitionDelay: `${i * 60}ms` }}
+              onClick={() => setLightbox(i)}
+              aria-label={`Enlarge photo: ${img.caption}`}
+            >
+              <img src={img.src} alt={img.alt} loading="lazy" decoding="async" />
+              <div
+                className="gallery-overlay absolute inset-0 flex flex-col justify-end p-3 rounded-sm"
+                style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.78) 0%, transparent 50%)' }}
+              >
+                <span className="text-xs tracking-wide" style={{ color: '#FAF8F4' }}>{img.caption}</span>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {active && (
+        <Lightbox
+          item={active}
+          onClose={() => setLightbox(null)}
+          onPrev={() => setLightbox(i => (i - 1 + embroideryPhotos.length) % embroideryPhotos.length)}
+          onNext={() => setLightbox(i => (i + 1) % embroideryPhotos.length)}
+        />
+      )}
     </section>
   )
 }
@@ -510,19 +718,68 @@ function CtaBanner() {
    GALLERY
    ═══════════════════════════════════════════ */
 const galleryImages = [
-  { src: '/images/shopfront.jpg', caption: 'Our shop on Perry Street, Northfleet', thumb: 'Shop Front' },
-  { src: '/images/flyer.jpg', caption: 'Services & Pricing — Same Day Service Available', thumb: 'Services' },
-  { src: '/images/shopfront.jpg', caption: 'Perry Tailoring & Embroidery — Gravesend', thumb: 'Storefront' },
+  {
+    src: '/images/shopfront.jpg',
+    caption: 'Our shop on Perry Street, Northfleet',
+    alt: 'Perry Tailoring & Embroidery shop front on Perry Street, Northfleet, Gravesend',
+  },
+  {
+    src: '/images/flyer.jpg',
+    caption: 'Services & Pricing — Same Day Service Available',
+    alt: 'Perry Tailoring services and pricing flyer showing same-day alterations in Gravesend',
+  },
+  {
+    src: '/images/embroidery-ruby-cap.jpg',
+    caption: 'Custom name embroidery on caps',
+    alt: 'Black and pink baseball cap with Ruby embroidered in pink script and a diamond motif',
+  },
+  {
+    src: '/images/embroidery-dog.jpg',
+    caption: 'Detailed custom pet portrait embroidery',
+    alt: 'German Shepherd portrait being embroidered on fabric by a professional embroidery machine',
+  },
+  {
+    src: '/images/embroidery-machine.jpg',
+    caption: 'In-house professional embroidery',
+    alt: 'Rainbow Emb industrial embroidery machine with a wall of coloured thread cones in the Gravesend workshop',
+  },
+  {
+    src: '/images/tailoring-dress.jpg',
+    caption: 'Dress tailoring and alterations',
+    alt: 'Sage green formal dress on a mannequin beside an industrial sewing machine in the Perry tailoring shop',
+  },
+  {
+    src: '/images/apex-towels.jpg',
+    caption: 'Bulk towel and logo embroidery',
+    alt: 'Bulk order of grey textured towels embroidered with the APEX Captain\'s Day 2026 logo',
+  },
+  {
+    src: '/images/uniform-embroidery.jpg',
+    caption: 'Uniform and workwear orders',
+    alt: 'Matching yellow and brown custom uniforms hanging on racks ready for collection',
+  },
+  {
+    src: '/images/custom-embroidery-flyer.jpg',
+    caption: 'Custom embroidery services',
+    alt: 'Custom embroidery flyer for Perry Tailoring showing logo workwear, personalised gifts, uniforms and contact details',
+  },
 ]
 
 function Gallery() {
   const [lightbox, setLightbox] = useState(null)
 
   useEffect(() => {
-    const fn = e => { if (e.key === 'Escape') setLightbox(null) }
+    if (lightbox == null) return undefined
+    const fn = e => {
+      if (e.key === 'Escape') setLightbox(null)
+      if (e.key === 'ArrowRight') setLightbox(i => (i + 1) % galleryImages.length)
+      if (e.key === 'ArrowLeft') setLightbox(i => (i - 1 + galleryImages.length) % galleryImages.length)
+    }
     window.addEventListener('keydown', fn)
     return () => window.removeEventListener('keydown', fn)
-  }, [])
+  }, [lightbox])
+
+  const active = lightbox != null ? galleryImages[lightbox] : null
 
   return (
     <section id="gallery" className="py-24 md:py-32 bg-base">
@@ -533,17 +790,17 @@ function Gallery() {
           <p className="text-muted text-sm">Click any image to enlarge</p>
         </div>
 
-        {/* Main grid — 3 col desktop / 2 tablet / 1 mobile */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {galleryImages.map((img, i) => (
-            <div
-              key={i}
-              className="gallery-item reveal rounded-sm relative"
-              style={{ aspectRatio: '4/3', transitionDelay: `${i * 70}ms` }}
-              onClick={() => setLightbox(img)}
+            <button
+              type="button"
+              key={img.src}
+              className="gallery-item reveal rounded-sm relative p-0 text-left"
+              style={{ aspectRatio: '4/3', transitionDelay: `${i * 50}ms` }}
+              onClick={() => setLightbox(i)}
+              aria-label={`Enlarge photo: ${img.caption}`}
             >
-              <img src={img.src} alt={img.caption} loading="lazy" />
-              {/* Hover overlay */}
+              <img src={img.src} alt={img.alt} loading="lazy" decoding="async" />
               <div
                 className="gallery-overlay absolute inset-0 flex flex-col justify-end p-5 rounded-sm"
                 style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 55%)' }}
@@ -555,7 +812,7 @@ function Gallery() {
                   <span className="text-xs tracking-wide" style={{ color: '#FAF8F4' }}>{img.caption}</span>
                 </div>
               </div>
-            </div>
+            </button>
           ))}
         </div>
 
@@ -566,10 +823,11 @@ function Gallery() {
         >
           <img
             src="/images/shopfront.jpg"
-            alt="Perry Tailoring and Embroidery Gravesend shop"
+            alt="Perry Tailoring and Embroidery shop front on Perry Street, Gravesend"
             className="w-full object-cover"
             style={{ maxHeight: '320px', objectPosition: 'center 20%' }}
             loading="lazy"
+            decoding="async"
           />
           <div className="absolute inset-0 flex flex-col justify-end p-8"
             style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.88) 0%, transparent 55%)' }}
@@ -584,22 +842,13 @@ function Gallery() {
         </div>
       </div>
 
-      {/* Lightbox */}
-      {lightbox && (
-        <div className="lightbox-overlay" onClick={() => setLightbox(null)}>
-          <div className="relative max-w-4xl w-full mx-4" onClick={e => e.stopPropagation()}>
-            <button onClick={() => setLightbox(null)}
-              className="absolute -top-10 right-0 text-sm flex items-center gap-2 transition-colors"
-              style={{ color: 'rgba(250,248,244,0.6)' }}
-              onMouseEnter={e => e.currentTarget.style.color = '#FAF8F4'}
-              onMouseLeave={e => e.currentTarget.style.color = 'rgba(250,248,244,0.6)'}
-            >
-              Close <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            </button>
-            <img src={lightbox.src} alt={lightbox.caption} className="w-full rounded-sm" style={{ maxHeight: '82vh', objectFit: 'contain' }}/>
-            <p className="text-center text-sm mt-3" style={{ color: 'rgba(250,248,244,0.5)' }}>{lightbox.caption}</p>
-          </div>
-        </div>
+      {active && (
+        <Lightbox
+          item={active}
+          onClose={() => setLightbox(null)}
+          onPrev={() => setLightbox(i => (i - 1 + galleryImages.length) % galleryImages.length)}
+          onNext={() => setLightbox(i => (i + 1) % galleryImages.length)}
+        />
       )}
     </section>
   )
@@ -850,6 +1099,7 @@ export default function App() {
       <main>
         <Hero />
         <Services />
+        <Embroidery />
         <WhyTrust />
         <CtaBanner />
         <Testimonials />
